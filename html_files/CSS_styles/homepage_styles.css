@@ -27,15 +27,16 @@ body {
 
 
 .map-box {
-    width: 800px;       /* adjust to your map size */
+    width: 1000px;     
     margin: 0 auto;
-    border: 3px solid #444;
-    border-radius: 10px;
-    overflow: hidden;
+    
 }
 
 .map-image {
+    .map-image {
     width: 100%;
+    max-width: 1000px;
     height: auto;
     display: block;
+}
 }
