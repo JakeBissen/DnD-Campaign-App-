@@ -1,26 +1,41 @@
-// Position timeline items evenly
-const items = document.querySelectorAll('.timeline-item');
-items.forEach((item, index) => {
-  const percent = (index / (items.length - 1)) * 100;
-  item.style.left = percent + "%";
-});
-
-// Modal logic
 const modal = document.getElementById("infoModal");
 const modalText = document.getElementById("modalText");
 const closeModal = document.getElementById("closeModal");
+const items = document.querySelectorAll(".timeline-item");
 
+// Open modal with fade-in
 items.forEach(item => {
-  item.addEventListener("click", () => {
-    modalText.textContent = item.dataset.info;
-    modal.style.display = "flex";
-  });
+    item.addEventListener("click", () => {
+        modalText.innerHTML = item.dataset.info;
+        modal.classList.remove("hide");
+        modal.classList.add("show");
+    });
 });
 
-closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+// Close modal with fade-out
+function closeModalWindow() {
+    modal.classList.remove("show");
+    modal.classList.add("hide");
+
+    // Wait for fade-out to finish before hiding completely
+    setTimeout(() => {
+        modal.style.display = "none";
+        modal.classList.remove("hide");
+    }, 300);
+}
+
+closeModal.addEventListener("click", closeModalWindow);
 
 window.addEventListener("click", (e) => {
-  if (e.target === modal) modal.style.display = "none";
+    if (e.target === modal) {
+        closeModalWindow();
+    }
 });
+
+// Ensure display:flex is applied only when showing
+const observer = new MutationObserver(() => {
+    if (modal.classList.contains("show")) {
+        modal.style.display = "flex";
+    }
+});
+observer.observe(modal, { attributes: true });
